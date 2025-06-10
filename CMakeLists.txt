@@ -16,7 +16,6 @@ set(CORE_DIR            ${CMAKE_SOURCE_DIR}/Core)
 set(HAL_DIR             ${CMAKE_SOURCE_DIR}/Drivers/STM32U5xx_HAL_Driver)
 set(LVGL_DIR            ${CMAKE_SOURCE_DIR}/lvgl)
 set(CMSIS_DIR           ${CMAKE_SOURCE_DIR}/Drivers/CMSIS)
-set(NEMA_DIR            ${CMAKE_SOURCE_DIR}/lvgl/libs/nema_gfx)
 
 # Enable compile command to ease indexing with e.g. clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
@@ -58,7 +57,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     ${CORE_DIR}/Inc
     ${HAL_DIR}/Inc
     ${LVGL_DIR}
-    ${NEMA_DIR}/include
+    ${CMAKE_SOURCE_DIR}/lib/nema_gfx/include
 )
 
 # Add compiler specific sources
@@ -101,7 +100,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
-    ${NEMA_DIR}/lib/core/cortex_m33_revC/gcc/libnemagfx-float-abi-hard.a
+    ${CMAKE_SOURCE_DIR}/lib/nema_gfx/cortex_m33_NemaPVG/gcc/libnemagfx-float-abi-hard.a
 )
 
 # Validate that STM32CubeMX code is compatible with C standard
