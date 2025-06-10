@@ -26,7 +26,9 @@
 #include "lvgl/lvgl.h"
 #include "lvgl/demos/lv_demos.h"
 #include "lvgl/examples/lv_examples.h"
-
+#include <nema_core.h>
+#include <assert.h>
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -84,6 +86,7 @@ static void MX_GPU2D_Init(void);
 static void MX_HSPI1_Init(void);
 static void MX_I2C2_Init(void);
 static void MX_JPEG_Init(void);
+void nema_lib_compatibility_check(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -138,6 +141,8 @@ int main(void)
   MX_JPEG_Init();
   /* USER CODE BEGIN 2 */
 
+  nema_lib_compatibility_check();
+
   lvgl_port_init();
 
   lv_demo_benchmark();
@@ -158,6 +163,25 @@ int main(void)
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
+}
+
+void nema_lib_compatibility_check() {
+    // The STM32U5F9 and STM32U5G9 support VG in hardware, remember to link the correct library in your application 
+    // to utilize that capability.
+    uint32_t confh = *(volatile uint32_t*)(GPU2D_BASE_NS + 0x1f4);
+    bool NemaVGEnabled = confh & (0x1 << 9);
+    const char *device_name = nema_get_sw_device_name();
+    bool NemaVGLib = true;
+
+    if (strcmp(device_name, "NemaP") == 0) {
+        NemaVGLib = false;
+    }
+
+    if (NemaVGEnabled && !NemaVGLib) {
+        printf("NemaVG hardware detected.\nPlease use NemaVG libraries to use full capacity of hardware.\n");
+    }
+
+    assert(NemaVGEnabled || !NemaVGLib);
 }
 
 /**
