@@ -139,19 +139,14 @@ int main(void)
 #error
 #endif
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-    /* USER CODE END WHILE */
-
-    lv_timer_handler();
-
-    HAL_Delay(1);
-
-    /* USER CODE BEGIN 3 */
-  }
-  /* USER CODE END 3 */
+    while (1)
+    {
+        HAL_GPIO_WritePin(LV_HANDLER_GPIO_Port, LV_HANDLER_Pin, GPIO_PIN_SET);
+        lv_timer_handler();
+        HAL_GPIO_WritePin(LV_HANDLER_GPIO_Port, LV_HANDLER_Pin, GPIO_PIN_RESET);
+        lv_obj_invalidate(lv_scr_act());
+        HAL_Delay(100);
+    }
 }
 
 void demo_bitmap()
@@ -742,7 +737,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOE, LCD_DISP_EN_Pin|LCD_BL_CTRL_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, VSYNC_FREQ_Pin|RENDER_TIME_Pin|FRAME_RATE_Pin|MCU_ACTIVE_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, LV_HANDLER_Pin|REFR_AREA_Pin|FLUSH_CB_Pin|MCU_ACTIVE_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, USER_LD2_RED_Pin|USER_LD3_GREEN_Pin, GPIO_PIN_SET);
@@ -773,8 +768,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(USER_BUTTON_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : VSYNC_FREQ_Pin RENDER_TIME_Pin FRAME_RATE_Pin MCU_ACTIVE_Pin */
-  GPIO_InitStruct.Pin = VSYNC_FREQ_Pin|RENDER_TIME_Pin|FRAME_RATE_Pin|MCU_ACTIVE_Pin;
+  /*Configure GPIO pins : LV_HANDLER_Pin REFR_AREA_Pin FLUSH_CB_Pin MCU_ACTIVE_Pin */
+  GPIO_InitStruct.Pin = LV_HANDLER_Pin|REFR_AREA_Pin|FLUSH_CB_Pin|MCU_ACTIVE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;

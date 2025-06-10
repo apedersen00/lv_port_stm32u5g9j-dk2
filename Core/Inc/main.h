@@ -57,27 +57,32 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define LCD_DISP_EN_Pin GPIO_PIN_4
-#define LCD_DISP_EN_GPIO_Port GPIOE
-#define TP_IRQ_Pin GPIO_PIN_5
-#define TP_IRQ_GPIO_Port GPIOE
-#define TP_IRQ_EXTI_IRQn EXTI5_IRQn
-#define LCD_BL_CTRL_Pin GPIO_PIN_6
-#define LCD_BL_CTRL_GPIO_Port GPIOE
-#define USER_BUTTON_Pin GPIO_PIN_13
-#define USER_BUTTON_GPIO_Port GPIOC
-#define VSYNC_FREQ_Pin GPIO_PIN_0
-#define VSYNC_FREQ_GPIO_Port GPIOC
-#define RENDER_TIME_Pin GPIO_PIN_10
-#define RENDER_TIME_GPIO_Port GPIOC
-#define FRAME_RATE_Pin GPIO_PIN_11
-#define FRAME_RATE_GPIO_Port GPIOC
-#define MCU_ACTIVE_Pin GPIO_PIN_12
-#define MCU_ACTIVE_GPIO_Port GPIOC
-#define USER_LD2_RED_Pin GPIO_PIN_2
-#define USER_LD2_RED_GPIO_Port GPIOD
-#define USER_LD3_GREEN_Pin GPIO_PIN_4
-#define USER_LD3_GREEN_GPIO_Port GPIOD
+#define LCD_DISP_EN_Pin             GPIO_PIN_4
+#define LCD_DISP_EN_GPIO_Port       GPIOE
+#define TP_IRQ_Pin                  GPIO_PIN_5
+#define TP_IRQ_GPIO_Port            GPIOE
+#define TP_IRQ_EXTI_IRQn            EXTI5_IRQn
+#define LCD_BL_CTRL_Pin             GPIO_PIN_6
+#define LCD_BL_CTRL_GPIO_Port       GPIOE
+#define USER_BUTTON_Pin             GPIO_PIN_13
+#define USER_BUTTON_GPIO_Port       GPIOC
+
+#define LV_HANDLER_Pin              GPIO_PIN_0
+#define LV_HANDLER_GPIO_Port        GPIOC
+
+#define REFR_AREA_Pin               GPIO_PIN_10
+#define REFR_AREA_GPIO_Port         GPIOC
+
+#define FLUSH_CB_Pin                GPIO_PIN_11
+#define FLUSH_CB_GPIO_Port          GPIOC
+
+#define MCU_ACTIVE_Pin              GPIO_PIN_12
+#define MCU_ACTIVE_GPIO_Port        GPIOC
+
+#define USER_LD2_RED_Pin            GPIO_PIN_2
+#define USER_LD2_RED_GPIO_Port      GPIOD
+#define USER_LD3_GREEN_Pin          GPIO_PIN_4
+#define USER_LD3_GREEN_GPIO_Port    GPIOD
 
 /* USER CODE BEGIN Private defines */
 

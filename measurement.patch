@@ -1,0 +1,29 @@
+diff --git a/src/core/lv_refr.c b/src/core/lv_refr.c
+index 3d5860473..44bd2cd71 100644
+--- a/src/core/lv_refr.c
++++ b/src/core/lv_refr.c
+@@ -24,6 +24,8 @@
+ #include "../font/lv_font_fmt_txt.h"
+ #include "../stdlib/lv_string.h"
+ #include "lv_global.h"
++#include "main.h"
++#include "stm32u5xx_hal.h"
+ 
+ /*********************
+  *      DEFINES
+@@ -584,6 +586,7 @@ static void refr_invalid_areas(void)
+ {
+     if(disp_refr->inv_p == 0) return;
+     LV_PROFILER_REFR_BEGIN;
++    HAL_GPIO_WritePin(REFR_AREA_GPIO_Port, REFR_AREA_Pin, GPIO_PIN_SET);
+ 
+     /*Find the last area which will be drawn*/
+     int32_t i;
+@@ -656,6 +659,7 @@ static void refr_invalid_areas(void)
+ 
+     lv_display_send_event(disp_refr, LV_EVENT_RENDER_READY, NULL);
+     disp_refr->rendering_in_progress = false;
++    HAL_GPIO_WritePin(REFR_AREA_GPIO_Port, REFR_AREA_Pin, GPIO_PIN_RESET);
+     LV_PROFILER_REFR_END;
+ }
+ 
