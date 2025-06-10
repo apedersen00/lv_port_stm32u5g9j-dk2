@@ -345,7 +345,7 @@
 #define LV_USE_DRAW_DMA2D 0
 
 #if LV_USE_DRAW_DMA2D
-    #define LV_DRAW_DMA2D_HAL_INCLUDE "stm32h7xx_hal.h"
+    #define LV_DRAW_DMA2D_HAL_INCLUDE "stm32u5xx_hal.h"
 
     /* if enabled, the user is required to call `lv_draw_dma2d_transfer_complete_interrupt_handler`
      * upon receiving the DMA2D global interrupt
@@ -1285,7 +1285,7 @@
 #define LV_USE_ST_LTDC    1
 #if LV_USE_ST_LTDC
     /* Only used for partial. */
-    #define LV_ST_LTDC_USE_DMA2D_FLUSH 1
+    #define LV_ST_LTDC_USE_DMA2D_FLUSH 0
 #endif
 
 /** LVGL Windows backend */
