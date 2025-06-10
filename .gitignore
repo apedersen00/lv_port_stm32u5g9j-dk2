@@ -1,5 +1,11 @@
 build
-
+CMakeFiles
+.vscode
+CMakeCache.txt
+CMakePresets.json
+build.ninja
+cmake_install.cmake
+compile_commands.json
 
 /Debug/
 /Release/

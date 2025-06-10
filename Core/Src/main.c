@@ -20,8 +20,6 @@
 #include "main.h"
 #include "jpeg_utils_conf.h"
 
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
 #include "lvgl_port.h"
 #include "lvgl/lvgl.h"
 #include "lvgl/demos/lv_demos.h"
@@ -29,47 +27,19 @@
 #include <nema_core.h>
 #include <assert.h>
 #include <string.h>
-/* USER CODE END Includes */
+#include "lorem.h"
 
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
-
-/* USER CODE END PTD */
-
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
-
-/* USER CODE END PD */
-
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
-/* USER CODE END PM */
-
-/* Private variables ---------------------------------------------------------*/
-
-CRC_HandleTypeDef hcrc;
-
-DCACHE_HandleTypeDef hdcache1;
-DCACHE_HandleTypeDef hdcache2;
-
-DMA2D_HandleTypeDef hdma2d;
-
-GPU2D_HandleTypeDef hgpu2d;
-
-XSPI_HandleTypeDef hxspi1;
-
-I2C_HandleTypeDef hi2c2;
-
-JPEG_HandleTypeDef hjpeg;
-DMA_HandleTypeDef handle_GPDMA1_Channel1;
-DMA_HandleTypeDef handle_GPDMA1_Channel0;
-
-LTDC_HandleTypeDef hltdc;
-
-/* USER CODE BEGIN PV */
-
-/* USER CODE END PV */
+CRC_HandleTypeDef        hcrc;
+DCACHE_HandleTypeDef     hdcache1;
+DCACHE_HandleTypeDef     hdcache2;
+DMA2D_HandleTypeDef      hdma2d;
+GPU2D_HandleTypeDef      hgpu2d;
+XSPI_HandleTypeDef       hxspi1;
+I2C_HandleTypeDef        hi2c2;
+JPEG_HandleTypeDef       hjpeg;
+DMA_HandleTypeDef        handle_GPDMA1_Channel1;
+DMA_HandleTypeDef        handle_GPDMA1_Channel0;
+LTDC_HandleTypeDef       hltdc;
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
@@ -87,14 +57,22 @@ static void MX_HSPI1_Init(void);
 static void MX_I2C2_Init(void);
 static void MX_JPEG_Init(void);
 void nema_lib_compatibility_check(void);
-/* USER CODE BEGIN PFP */
 
-/* USER CODE END PFP */
+void demo_screen_blit(void);
+void demo_screen_blend(void);
+void demo_screen_text(void);
+void demo_bitmap(void);
+void demo_bitmap_blend(void);
+void demo_rle(void);
+void demo_lz4(void);
+void demo_img(void);
 
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
+lv_obj_t * ui_Menu;
+static lv_obj_t * my_rect;
+static lv_obj_t * my_other_rect;
+lv_obj_t * ui_Set_Minutes1;
 
-/* USER CODE END 0 */
+#define DEMO 0
 
 /**
   * @brief  The application entry point.
@@ -145,10 +123,21 @@ int main(void)
 
   lvgl_port_init();
 
-  lv_demo_benchmark();
-  // lv_obj_center(lv_roller_create(lv_screen_active()));
-
-  /* USER CODE END 2 */
+#if DEMO == 0
+	lv_demo_widgets();
+#elif DEMO == 1
+    demo_screen_blit();
+#elif DEMO == 2
+    demo_screen_blend();
+#elif DEMO == 3
+    demo_screen_text();
+#elif DEMO == 4
+    demo_bitmap();
+#elif DEMO == 5
+    demo_bitmap_blend();
+#else
+#error
+#endif
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -163,6 +152,93 @@ int main(void)
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
+}
+
+void demo_bitmap()
+{
+    ui_Menu = lv_obj_create(NULL);
+
+    LV_IMAGE_DECLARE(forest_800x480);
+    lv_obj_t * forest = lv_image_create(ui_Menu);
+    lv_image_set_src(forest, &forest_800x480);
+
+    lv_disp_load_scr(ui_Menu);
+}
+
+void demo_bitmap_blend()
+{
+    ui_Menu = lv_obj_create(NULL);
+
+    my_rect = lv_obj_create(ui_Menu);
+    lv_obj_set_size(my_rect, 800, 480);
+    lv_obj_set_pos(my_rect, 0, 0);
+    lv_obj_set_style_bg_color(my_rect, (lv_color_t)LV_COLOR_MAKE(0, 0, 255), 0);
+    lv_obj_set_style_bg_opa(my_rect, LV_OPA_100, 0);
+    lv_obj_set_style_radius(my_rect, 0, 0);
+
+    LV_IMAGE_DECLARE(forest_800x480);
+    lv_obj_t * forest = lv_image_create(ui_Menu);
+    lv_image_set_src(forest, &forest_800x480);
+    lv_obj_set_style_image_opa(forest, LV_OPA_50, 0);
+
+    lv_disp_load_scr(ui_Menu);
+}
+
+void demo_screen_blit()
+{
+    ui_Menu = lv_obj_create(NULL);
+
+    my_rect = lv_obj_create(ui_Menu);
+    lv_obj_set_size(my_rect, 800, 480);
+    lv_obj_set_pos(my_rect, 0, 0);
+    lv_obj_set_style_bg_color(my_rect, (lv_color_t)LV_COLOR_MAKE(0, 0, 255), 0);
+
+    lv_obj_set_style_radius(my_rect, 0, 0);
+
+    lv_disp_load_scr(ui_Menu);
+}
+
+void demo_screen_blend()
+{
+    ui_Menu = lv_obj_create(NULL);
+
+    my_rect = lv_obj_create(ui_Menu);
+    lv_obj_set_size(my_rect, 800, 480);
+    lv_obj_set_pos(my_rect, 0, 0);
+    lv_obj_set_style_bg_color(my_rect, (lv_color_t)LV_COLOR_MAKE(0, 0, 255), 0);
+    lv_obj_set_style_bg_opa(my_rect, LV_OPA_100, 0);
+    lv_obj_set_style_radius(my_rect, 0, 0);
+    lv_obj_move_background(my_rect);
+
+    my_other_rect = lv_obj_create(ui_Menu);
+    lv_obj_set_size(my_other_rect, 800, 480);
+    lv_obj_set_pos(my_other_rect, 0, 0);
+    lv_obj_set_style_bg_color(my_other_rect, (lv_color_t)LV_COLOR_MAKE(255, 0, 0), 0);
+    lv_obj_set_style_bg_opa(my_other_rect, LV_OPA_50, 0);
+    lv_obj_set_style_radius(my_other_rect, 0, 0);
+    lv_obj_move_foreground(my_other_rect);
+
+    lv_disp_load_scr(ui_Menu);
+}
+
+void demo_screen_text()
+{
+    ui_Menu = lv_obj_create(NULL);
+
+    my_rect = lv_obj_create(ui_Menu);
+    lv_obj_set_size(my_rect, 800, 480);
+    lv_obj_set_pos(my_rect, 0, 0);
+    lv_obj_set_style_bg_color(my_rect, (lv_color_t)LV_COLOR_MAKE(0, 0, 255), 0);
+    lv_obj_set_style_radius(my_rect, 0, 0);
+
+    ui_Set_Minutes1 = lv_label_create(ui_Menu);
+    lv_obj_set_width(ui_Set_Minutes1, lv_pct(80));   /// 1
+    lv_obj_set_height(ui_Set_Minutes1, LV_SIZE_CONTENT);    /// 1
+    lv_label_set_text(ui_Set_Minutes1, loremIpsumText);
+    lv_obj_set_style_text_color(ui_Set_Minutes1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Set_Minutes1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    lv_disp_load_scr(ui_Menu);
 }
 
 void nema_lib_compatibility_check() {

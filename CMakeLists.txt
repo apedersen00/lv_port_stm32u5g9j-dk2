@@ -75,6 +75,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     ${CORE_DIR}/Src/syscalls.c
     ${CORE_DIR}/Src/sysmem.c
     ${CORE_DIR}/Src/system_stm32u5xx.c
+    ${CORE_DIR}/Src/forest_800x480.c
 )
 
 # HAL
