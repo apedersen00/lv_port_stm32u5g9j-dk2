@@ -72,7 +72,13 @@ static lv_obj_t * my_rect;
 static lv_obj_t * my_other_rect;
 lv_obj_t * ui_Set_Minutes1;
 
-#define DEMO 0
+#define DEMO 7
+
+/**
+ * 0: 300x300 Widgets demo snippet. Easier to compress.
+ * 1: 300x300 ST Image. Difficult to compress.
+*/
+#define COMPRESS_IMG 0
 
 /**
   * @brief  The application entry point.
@@ -135,6 +141,12 @@ int main(void)
     demo_bitmap();
 #elif DEMO == 5
     demo_bitmap_blend();
+#elif DEMO == 6
+    demo_rle();
+#elif DEMO == 7
+    demo_lz4();
+#elif DEMO == 8
+    demo_img();
 #else
 #error
 #endif
@@ -232,6 +244,57 @@ void demo_screen_text()
     lv_label_set_text(ui_Set_Minutes1, loremIpsumText);
     lv_obj_set_style_text_color(ui_Set_Minutes1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Set_Minutes1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    lv_disp_load_scr(ui_Menu);
+}
+
+void demo_rle()
+{
+    ui_Menu = lv_obj_create(NULL);
+
+#if COMPRESS_IMG == 0
+    LV_IMAGE_DECLARE(widgets_300x300_rle_rgb565);
+    lv_obj_t * comp_img = lv_image_create(ui_Menu);
+    lv_image_set_src(comp_img, &widgets_300x300_rle_rgb565);
+#elif COMPRESS_IMG == 1
+    LV_IMAGE_DECLARE(st_300x300_rle_rgb565);
+    lv_obj_t * comp_img = lv_image_create(ui_Menu);
+    lv_image_set_src(comp_img, &st_300x300_rle_rgb565);
+#endif
+
+    lv_disp_load_scr(ui_Menu);
+}
+
+void demo_lz4()
+{
+    ui_Menu = lv_obj_create(NULL);
+
+#if COMPRESS_IMG == 0
+    LV_IMAGE_DECLARE(widgets_300x300_lz4_rgb565);
+    lv_obj_t * comp_img = lv_image_create(ui_Menu);
+    lv_image_set_src(comp_img, &widgets_300x300_lz4_rgb565);
+#elif COMPRESS_IMG == 1
+    LV_IMAGE_DECLARE(st_300x300_lz4_rgb565);
+    lv_obj_t * comp_img = lv_image_create(ui_Menu);
+    lv_image_set_src(comp_img, &st_300x300_lz4_rgb565);
+#endif
+
+    lv_disp_load_scr(ui_Menu);
+}
+
+void demo_img()
+{
+    ui_Menu = lv_obj_create(NULL);
+
+#if COMPRESS_IMG == 0
+    LV_IMAGE_DECLARE(widgets_300x300_rgb565);
+    lv_obj_t * comp_img = lv_image_create(ui_Menu);
+    lv_image_set_src(comp_img, &widgets_300x300_rgb565);
+#elif COMPRESS_IMG == 1
+    LV_IMAGE_DECLARE(st_300x300_rgb565);
+    lv_obj_t * comp_img = lv_image_create(ui_Menu);
+    lv_image_set_src(comp_img, &st_300x300_rgb565);
+#endif
 
     lv_disp_load_scr(ui_Menu);
 }

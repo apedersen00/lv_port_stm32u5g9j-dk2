@@ -76,6 +76,12 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     ${CORE_DIR}/Src/sysmem.c
     ${CORE_DIR}/Src/system_stm32u5xx.c
     ${CORE_DIR}/Src/forest_800x480.c
+    ${CORE_DIR}/Src/widgets_300x300_rgb565.c
+    ${CORE_DIR}/Src/widgets_300x300_rle_rgb565.c
+    ${CORE_DIR}/Src/widgets_300x300_lz4_rgb565.c
+    ${CORE_DIR}/Src/st_300x300_rgb565.c
+    ${CORE_DIR}/Src/st_300x300_rle_rgb565.c
+    ${CORE_DIR}/Src/st_300x300_lz4_rgb565.c
 )
 
 # HAL
